@@ -49,26 +49,11 @@
     <script src="../bower_components/underscore/underscore.js"></script>
     <script src="../bower_components/backbone/backbone.js"></script>
     <script src="../bower_components/marionette/lib/backbone.marionette.js"></script>
+    <!-- App -->
+    <script src="js/app.js"></script>
+    <script src="js/entities/contact.js"></script>
     
     <script>
-      var ContactManager = new Mn.Application();
-      
-      ContactManager.addRegions({
-        mainRegion: "#main-region"
-      });
-      
-      ContactManager.Contact = Backbone.Model.extend({
-        defaults: {
-          "phoneNumber": "No phone number"
-        }
-      });
-      
-      ContactManager.ContactCollection = Backbone.Collection.extend({
-        model: ContactManager.Contact,
-        comparator: function (contact) {
-          return contact.get("firstName") + " " + contact.get("lastName");
-        }
-      });
       
       ContactManager.ContactItemView = Mn.ItemView.extend({
         tagName: "li",
@@ -82,23 +67,7 @@
       });
       
       ContactManager.on("start", function () {
-        var contacts = new ContactManager.ContactCollection([
-          {
-            firstName: "Bob",
-            lastName: "Brigham",
-            phoneNumber: "555-444"
-          },
-          {
-            firstName: "Alice",
-            lastName: "Arten",
-            phoneNumber: "555-666"
-          },
-          {
-            firstName: "Anton",
-            lastName: "Yatsenyuk",
-            phoneNumber: "999-333"
-          }
-        ]);
+        var contacts = ContactManager.request("contact:entities");
         
         var contactsListView = new ContactManager.ContactsView({
           collection: contacts
