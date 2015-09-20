@@ -1,7 +1,15 @@
 ContactManager.module("ContactsApp.List", function (List, ContactManager, Backbone, Mn, $, _) {
   List.Contact = Mn.ItemView.extend({
     tagName: "tr",
-    template: "#contact-list-item"
+    template: "#contact-list-item",
+
+    events: {
+      "click": "highlightName"
+    },
+
+    highlightName: function () {
+      this.$el.toggleClass("warning");
+    }
   });
 
   List.Contacts = Mn.CompositeView.extend({
